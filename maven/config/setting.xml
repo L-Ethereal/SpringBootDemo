@@ -159,7 +159,7 @@ under the License.
         <mirror>
 			<id>alimaven</id>
 			<name>aliyun maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+			<url>https://maven.aliyun.com/repository/public</url>
 			<mirrorOf>central</mirrorOf>        
 		</mirror>
         <mirror>
@@ -196,6 +196,18 @@ under the License.
  
     </mirrors>
  
+	<repository>
+		<id>spring</id>
+		<url>https://maven.aliyun.com/repository/spring</url>
+		<releases>
+			<enabled>true</enabled>
+			<updatePolicy>always</updatePolicy>
+		</releases>
+		<snapshots>
+			<enabled>true</enabled>
+			<updatePolicy>always</updatePolicy>
+		</snapshots>
+	</repository>
     <!-- profiles
      | This is a list of profiles which can be activated in a variety of ways, and which can modify
      | the build process. Profiles provided in the settings.xml are intended to provide local machine-
