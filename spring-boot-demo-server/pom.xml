@@ -19,6 +19,13 @@
     <dependencies>
         <dependency>
             <groupId>spring-boot-demo</groupId>
+            <artifactId>spring-boot-demo-manager</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-boot-demo</groupId>
             <artifactId>spring-boot-demo-service</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>

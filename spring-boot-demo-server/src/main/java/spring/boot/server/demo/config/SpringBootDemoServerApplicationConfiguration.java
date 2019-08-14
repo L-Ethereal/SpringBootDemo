@@ -6,10 +6,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import spring.boot.demo.manager.config.SpringBootDemoManagerConfiguration;
 import srping.boot.demo.service.config.SpringBootDemoServiceConfiguration;
 
 @Configuration
-@Import(SpringBootDemoServiceConfiguration.class)
+@Import({SpringBootDemoServiceConfiguration.class, SpringBootDemoManagerConfiguration.class})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class SpringBootDemoServerApplicationConfiguration {
     /*
