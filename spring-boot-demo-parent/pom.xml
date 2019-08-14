@@ -24,7 +24,7 @@
         <checkstyle.skip>true</checkstyle.skip>
 
         <!-- Spring包 -->
-        <spring-boot-maven-plugin.version>2.2.0.M2</spring-boot-maven-plugin.version>
+        <spring-boot-maven-plugin.version>2.1.5.RELEASE</spring-boot-maven-plugin.version>
 
         <!-- 依赖包版本号 -->
         <checkstyle.version>8.8</checkstyle.version>

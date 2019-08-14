@@ -1,16 +1,17 @@
-package spring.boot.config;
+package spring.boot.server.demo.config;
 
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
 import srping.boot.demo.service.config.SpringBootDemoServiceConfiguration;
 
 @Configuration
 @Import(SpringBootDemoServiceConfiguration.class)
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
-public class SpringBootServiceApplicationConfiguration {
+public class SpringBootDemoServerApplicationConfiguration {
     /*
     @EnableAutoConfiguration
     Spring Boot会自动根据你jar包的依赖来自动配置项目。
