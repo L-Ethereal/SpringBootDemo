@@ -1,0 +1,37 @@
+// Copyright 2015 The gRPC Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+syntax = "proto3"; //请在非空非注释的第一行指定当前文件使用的是proto3的语法,默认proto2
+package grpc; //package与java_package有些不同，java_package是定义编译生成的java文件所在的目录，而package是对应的java类的命名空间
+
+// 指定的包是为我们生成 Java 类使用的。如果在 .proto 文件中没有显示的 java_package 参数，
+// 那么就会使用缺省的 proto 包（通过 "package" 关键字指定）。但是，因为 proto 包一般不是以域名
+// 翻转的格式命名，所以它不是好的 Java 包。 如果我们用其它语言通过 .proto 文件生成代码，java_package 是不起任何作用的。
+option java_package = "spring.boot.demo.api.demo";  // 输出路径 即 java 文件中的 package
+option java_outer_classname = "DemoServiceProto";//要生成Java类的名称
+option java_multiple_files = false;//编译后会生成多个Message类，并没有被包含在HelloWorldServiceProto.java文件中,反之,生成单一HelloWorldServiceProto.java文件
+//服务端接口类
+service DemoService {
+    rpc sayHello (DemoRequest) returns (DemoResponse) {} //服务端接口方法
+
+    rpc sayGoodbye (DemoRequest) returns (DemoResponse) {} //服务端接口方法
+}
+
+//请求参数 基于序号的协议字段映射，所以字段可以乱序，可缺段
+message DemoRequest {
+    string name = 1;
+}
+//响应参数
+message DemoResponse {
+    string message = 1;
+}
