@@ -1,18 +1,17 @@
 package spring.boot.demo.acceptance.test.base;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.AbstractStub;
 import lombok.extern.slf4j.Slf4j;
 import spring.boot.demo.acceptance.server.SpringBootDemoAcceptanceServerApplication;
 
 @Slf4j
-@SpringBootTest( classes = SpringBootDemoAcceptanceServerApplication.class )
+@SpringBootTest(classes = SpringBootDemoAcceptanceServerApplication.class)
 public class SpringBootDemoAcceptanceBaseTest extends AbstractTestNGSpringContextTests {
 
     /*
@@ -42,8 +41,34 @@ public class SpringBootDemoAcceptanceBaseTest extends AbstractTestNGSpringContex
 
      */
     // 当声明为 static 时，@Value 获取不到值
+
+    // @Before,@After和@BeforeClass和@AfterClass的区别
+    // @Before：在跑测试test001，test002时候都会各执行一次@Before部分的代码。
+    //@Beforeclass： 在类中只会被执行一次
+    //@After：释放资源  对于每一个测试方法都要执行一次
+    //@Afterclass:所有测试用例执行完才执行一次
+    //一个JUnit4的单元测试用例执行顺序为： 
+    //@BeforeClass -> @Before -> @Test -> @After -> @AfterClass; 
+    //每一个测试方法的调用顺序为： 
+    //@Before -> @Test -> @After; 
+
     @BeforeClass
     public static void setUp() throws Exception {
         System.out.println("Start SpringBootDemoAcceptanceBaseTest.setUp");
     }
+
+    private <T extends AbstractStub<T>> init (AbstractStub<T> abstractStub) {
+
+        log.info(" grpc-client connect start.");
+        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("127.0.0.1", 7052)
+                                                             .usePlaintext()
+                                                             .build();//池化处理 成本高
+
+        abstractStub.
+        abstractStub = newBlockingStub(managedChannel);
+
+        return abstractStub;
+    }
+
+
 }
