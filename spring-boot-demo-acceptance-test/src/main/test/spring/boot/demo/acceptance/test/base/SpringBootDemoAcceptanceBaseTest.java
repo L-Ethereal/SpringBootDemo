@@ -42,25 +42,8 @@ public class SpringBootDemoAcceptanceBaseTest extends AbstractTestNGSpringContex
 
      */
     // 当声明为 static 时，@Value 获取不到值
-    @Value("${grpc.server.demo.name}")
-    private String grpcServerName;
-    @Value("${grpc.server.demo.port}")
-    private int grpcServerPort;
-    @Autowired
-    private ManagedChannel managedChannel;
     @BeforeClass
     public static void setUp() throws Exception {
         System.out.println("Start SpringBootDemoAcceptanceBaseTest.setUp");
-//        connect();
-    }
-
-    private void connect () {
-        log.info(" grpc-client connect start.");
-//        Validate.notNull(grpcConfigurationValue, "grpcConfigurationValue 不能为 null");
-//        Validate.notNull(grpcConfigurationValue.getName(), "demoGrpcName不能为 null");
-//        Validate.notNull(grpcConfigurationValue.getPort(), "demoGprcPort不能为 null");
-        managedChannel = ManagedChannelBuilder.forAddress(grpcServerName, grpcServerPort)
-                                              .usePlaintext()
-                                              .build();//池化处理 成本高
     }
 }
