@@ -4,9 +4,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import io.grpc.stub.AbstractStub;
 import lombok.extern.slf4j.Slf4j;
 import spring.boot.demo.acceptance.server.SpringBootDemoAcceptanceServerApplication;
 
@@ -56,19 +53,19 @@ public class SpringBootDemoAcceptanceBaseTest extends AbstractTestNGSpringContex
     public static void setUp() throws Exception {
         System.out.println("Start SpringBootDemoAcceptanceBaseTest.setUp");
     }
-
-    private <T extends AbstractStub<T>> init (AbstractStub<T> abstractStub) {
-
-        log.info(" grpc-client connect start.");
-        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("127.0.0.1", 7052)
-                                                             .usePlaintext()
-                                                             .build();//池化处理 成本高
-
-        abstractStub.
-        abstractStub = newBlockingStub(managedChannel);
-
-        return abstractStub;
-    }
+//
+//    private <T extends AbstractStub<T>> init (AbstractStub<T> abstractStub) {
+//
+//        log.info(" grpc-client connect start.");
+//        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("127.0.0.1", 7052)
+//                                                             .usePlaintext()
+//                                                             .build();//池化处理 成本高
+//
+//        abstractStub.
+//        abstractStub = newBlockingStub(managedChannel);
+//
+//        return abstractStub;
+//    }
 
 
 }
