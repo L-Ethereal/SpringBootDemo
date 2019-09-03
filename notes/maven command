@@ -1,0 +1,15 @@
+1.maven指定 setting 文件
+mvn -s "Z:\.m2 private\settingsprivate.xml"
+
+2.maven install
+mvn install
+
+3.maven clean install
+mvn -s "Z:\.m2 private\settingsprivate.xml" clean install -Dmaven.test.skip=true
+
+4.maven获取依赖树
+mvn dependency:tree
+
+5.mven debug 模式 -X
+mvn -s "Z:\.m2 private\settingsprivate.xml" -X package
+

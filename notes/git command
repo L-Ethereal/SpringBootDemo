@@ -1,0 +1,31 @@
+1.获取git 分支
+git branch
+
+2.git 切换分支
+git checkout offlineLoan
+
+3.git pull 代码
+git pull --all
+
+4.git commit id
+git log
+
+5.将已 commit 但未 push 的内容回滚
+git reset --hard id
+
+6.连接服务器
+ssh 用户名@IP
+
+7.退出
+exit
+
+8.git 提交代码
+git push
+
+9.git merge 分支
+将 master 分支 merge 到当前分支
+git merge master
+
+10.查看提交记录
+git show -a 查看当前分支提交记录
+git show --all 查看所有分支提交记录
