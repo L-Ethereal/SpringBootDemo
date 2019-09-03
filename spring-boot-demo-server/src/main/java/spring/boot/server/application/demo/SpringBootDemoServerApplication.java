@@ -11,19 +11,17 @@ import spring.boot.server.demo.config.SpringBootDemoServerApplicationConfigurati
 @SpringBootApplication
 public class SpringBootDemoServerApplication {
 
-//    @Autowired
-//    private static GrpcLauncher grpcLauncher;
-
     public static void main(String[] args) throws Exception {
         SpringApplication springApplication = new SpringApplication(SpringBootDemoServerApplication.class);
         //a non-web application
         //springApplication.setWebEnvironment(false);
         ApplicationContext applicationContext = springApplication.run(args);
 
-//        Map<String, Object> grpcServiceBeanMap =  applicationContext.getBeansWithAnnotation(GrpcService.class);
-//        GrpcLauncher grpcLauncher = applicationContext.getBean("GrpcLauncher",GrpcLauncher.class);
-//        grpcLauncher.grpcStart(grpcServiceBeanMap);
-
+        // 打印项目 java version
+        System.getProperty("java.version");
+        System.getProperties().getProperty("java.vm.version");
+        System.out.println(System.getProperty("java.version"));
+        System.out.println(System.getProperties().getProperty("java.vm.version"));
         System.out.println("Current Server Application Context : " + applicationContext);
 
     }

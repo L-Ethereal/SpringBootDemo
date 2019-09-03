@@ -1,6 +1,5 @@
 package spring.boot.demo.acceptance.test.demo;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.testng.annotations.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +11,10 @@ import spring.boot.demo.api.demo.DemoServiceProto;
 @Slf4j
 public class DemoTest extends BaseAcceptanceBaseTest {
 
-    @Value("${grpc.server.demo.name}")
-    private String grpcServerName;
-    @Value("${grpc.server.demo.port}")
-    private int grpcServerPort;
+//    @Value("${grpc.server.demo.name}")
+//    private String grpcServerName;
+//    @Value("${grpc.server.demo.port}")
+//    private int grpcServerPort;
 
     @Test
     public void test() {

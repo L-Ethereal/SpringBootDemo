@@ -10,6 +10,8 @@ import spring.boot.demo.acceptance.configuration.demo.SpringBootDemoAcceptanceCo
 @SpringBootApplication
 public class SpringBootDemoAcceptanceServerApplication {
     public static void main(String[] args) throws Exception {
+        // 打印项目 java version
+        System.getProperties().getProperty("java.vm.version");
         System.out.println("Start SpringBootDemoAcceptanceServerApplication");
     }
 }

@@ -23,7 +23,6 @@ public class SpringBootDemoAcceptanceConfiguration {
         classpath是在编译后文件存放路径，默认是的bulid/classes/
         lib 和 classes 同属classpath 两者访问的优先级为 lib>classes
      */
-
     private final static Logger logger = LoggerFactory.getLogger(SpringBootDemoAcceptanceConfiguration.class);
 
     public SpringBootDemoAcceptanceConfiguration () {
