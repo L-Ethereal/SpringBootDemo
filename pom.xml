@@ -20,11 +20,11 @@
         <!-- 若不指定 Module 会有多 root -->
         <module>spring-boot-demo-parent</module>
         <module>spring-boot-demo-base</module>
-        <module>spring-boot-demo-acceptance-test</module>
         <module>spring-boot-demo-manager</module>
         <module>spring-boot-demo-server</module>
         <module>spring-boot-demo-service</module>
         <module>spring-boot-demo-api</module>
+        <module>spring-boot-demo-acceptance-test</module>
     </modules>
 
     <build>
