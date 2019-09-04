@@ -11,12 +11,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import lombok.extern.slf4j.Slf4j;
+import spring.boot.demo.base.configuration.DataSourceConfiguration;
 import spring.boot.demo.manager.config.SpringBootDemoManagerConfiguration;
 import srping.boot.demo.service.config.SpringBootDemoServiceConfiguration;
 
 @Configuration
 @Slf4j
-@Import({SpringBootDemoServiceConfiguration.class, SpringBootDemoManagerConfiguration.class})
+@Import({SpringBootDemoServiceConfiguration.class, SpringBootDemoManagerConfiguration.class, DataSourceConfiguration.class})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class SpringBootDemoServerApplicationConfiguration implements ApplicationContextAware, InitializingBean {
     /*
@@ -27,13 +28,6 @@ public class SpringBootDemoServerApplicationConfiguration implements Application
     个人理解： 如果你用了Mybatis，它的配置文件中会指定 数据库相关的参数，这个时候就用
     exclude={DataSourceAutoConfiguration.class}, 让spring-boot不要根据Maven中依赖自动配置了。
      */
-
-//    @Bean
-//    public GrpcLauncher getGrpcLauncher () {
-//        GrpcLauncher grpcLauncher = new GrpcLauncher();
-//        return grpcLauncher;
-//    }
-
 
     private ApplicationContext context;
 
