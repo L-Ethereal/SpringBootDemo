@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import lombok.extern.slf4j.Slf4j;
-import spring.boot.demo.base.configuration.DataSourceConfiguration;
+import spring.boot.demo.base.configuration.SpringBootDemoBaseConfiguration;
 import spring.boot.demo.manager.config.SpringBootDemoManagerConfiguration;
 import srping.boot.demo.service.config.SpringBootDemoServiceConfiguration;
 
 @Configuration
 @Slf4j
-@Import({SpringBootDemoServiceConfiguration.class, SpringBootDemoManagerConfiguration.class, DataSourceConfiguration.class})
+@Import({SpringBootDemoServiceConfiguration.class, SpringBootDemoManagerConfiguration.class, SpringBootDemoServiceConfiguration.class, SpringBootDemoBaseConfiguration.class})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class SpringBootDemoServerApplicationConfiguration implements ApplicationContextAware, InitializingBean {
     /*

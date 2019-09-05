@@ -27,7 +27,7 @@ import spring.boot.demo.base.datasource.master.MasterDataSourceConfiguration;
     我们手动的在 @Configuration 注解下面添加 @ComponentScan 注解并指定所需model类的包地址就可以解决整个问题了。
     原因估计是因为在项目的启动的最初阶段，IDE 还没有扫描到model类，无法发现对应的 bean ，于是就需要我们手动的给其指定需要扫描的包了。
  */
-@ComponentScan({"spring.boot.demo.base.datasource"})
+@ComponentScan(basePackages = {"spring.boot.demo.base.datasource"})
 public class DataSourceConfiguration {
 
     /*
@@ -131,6 +131,7 @@ public class DataSourceConfiguration {
         config.addDataSourceProperty("maintainTimeStats", "false");
         config.addDataSourceProperty("useUnicode", "true");
         config.addDataSourceProperty("characterEncoding", "utf8");
+        config.addDataSourceProperty("readOnly", "true");
 
         HikariDataSource hikariDataSource = new HikariDataSource(config);
         return hikariDataSource;
