@@ -15,6 +15,11 @@ import spring.boot.demo.dao.mapper.demo.AcctMapper;
 @GrpcService
 public class HelloAction extends DemoServiceGrpc.DemoServiceImplBase {
 
+    /*
+    由于 manager 包引用了 service 包
+    而 service 包中引用了 dao
+    相当于 manager 引用了 dao 所以可以使用 @Autowired 注入 dao 层的 Mapper
+     */
     @Autowired
     private AcctMapper acctMapper;
 
