@@ -106,5 +106,32 @@
                 </executions>
             </plugin>
         </plugins>
+
+<!--        问题记录-->
+<!--        org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)-->
+<!--        出现该错误的原因是，AcctMapper.java 代理接口没有和 AcctMapper.xml对应上。-->
+<!--        解决过程-->
+<!--        1.先对应代理接口和xml的名称是否一致，比如接口名,接口所在的包，接口的方法，接口的参数，接口的返回值类型是否和xml配置中一致。-->
+<!--        然后发现都一致，并没有什么问题。-->
+<!--        2.查看target下输出的文件-->
+<!--        可以看到我的dao包下面明明有 AcctMapper.java和 AcctMapper.xml两个文件的，然而target下输出的只有 AcctMapper.java-->
+<!--        这说明 AcctMapper.xml并没有被运行。-->
+<!--        原因是idea自动过滤掉了src/main/java下的配置文件，因为一般配置文件都是放在src/main/resource下的。-->
+<!--        解决方案-->
+<!--        1.是在src/main/resource下创建和 AcctMapper.java同样的包路径，将 AcctMapper.xml放入其中就可以了-->
+<!--        2.在pom.xml下添加如下-->
+<!--        使mapper.xml文件不论是放在src/main/resources或src/main/java下都可以被打包到classes目录下-->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
     </build>
 </project>
