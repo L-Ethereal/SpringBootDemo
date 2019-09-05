@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>spring-boot-demo</groupId>
+        <artifactId>spring-boot-demo-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>spring-boot-demo</groupId>
+    <artifactId>spring-boot-demo-dao</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
+    </dependencies>
+
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>project-local</id>-->
+<!--            <name>Project Local Repository</name>-->
+<!--            <url>file:${project-local-repo}</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+    <build>
+        <plugins>
+    <!--   pom.xml的plugin中没有配置xml文件路径，它去找默认的文件了，默认的文件路径是src/main/resources，文件名是generatorConfig.xml-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.7</version>
+                <configuration>
+                    <configurationFile>
+        <!--    ${basedir}表示项目根目录,即包含pom.xml文件的目录;-->
+        <!--    ${version}表示项目版本;-->
+        <!--    ${project.basedir}同${basedir};-->
+        <!--    ${project.baseUri}表示项目文件地址;-->
+        <!--    ${maven.build.timestamp}表示项目构件开始时间;-->
+        <!--    ${maven.build.timestamp.format}表示属性${maven.build.timestamp}的展示格式,默认值为yyyyMMdd-HHmm,
+                可自定义其格式,其类型可参考java.text.SimpleDateFormat。-->
+                        ${basedir}/src/main/resources/mybatis-generator.xml
+                    </configurationFile>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>1.3.7</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.17</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>spring-boot-demo</groupId>
+                        <artifactId>spring-boot-demo-dao</artifactId>
+                        <version>${project.version}</version>
+                        <scope>system</scope>
+                        <systemPath>${basedir}/src/main/WEB-INF/lib/spring-boot-demo-dao-1.0-SNAPSHOT.jar</systemPath>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- 使用maven构建jar包并拷贝到指定目录-->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId> <!-- 拷贝插件 -->
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>install</phase> <!-- maven生命周期 -->
+                        <configuration>
+                            <tasks> <!-- 其他语法自行百度maven-antrun-plugin插件的相关用法-->
+                                <copy todir="${output.jar.directory}"> <!--  文件将要输出目录 在parent pom中统一配置，此处引用即可-->
+                                    <fileset dir="${project.build.directory}"> <!-- 待拷贝文件的目录，默认目录在项目的target下-->
+                                        <include name="${project.artifactId}-${project.version}.jar" /> <!-- 待拷贝文件，可以使用下面的通配符，还可以是其他目录的文件。此处需要与project.bulid.finalName对应，否则可能找不到文件 -->
+                                        <!-- <include name="*.jar" /> -->
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
