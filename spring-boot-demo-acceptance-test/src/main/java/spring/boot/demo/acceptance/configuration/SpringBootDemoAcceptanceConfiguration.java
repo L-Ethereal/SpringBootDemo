@@ -1,4 +1,4 @@
-package spring.boot.demo.acceptance.configuration.demo;
+package spring.boot.demo.acceptance.configuration;
 
 
 import org.slf4j.Logger;
@@ -18,6 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SpringBootDemoAcceptanceConfiguration {
 
     /*
+    configuration 要放在 src/main/java 中
+    之前放到 src/main/configuration 中  会找不到 程序包 找不到符号
+    放到 src/main/java 中 正常
+     */
+    /*
         关于 classpath
         src 不是 classpath
         classpath是在编译后文件存放路径，默认是的bulid/classes/
@@ -25,7 +30,7 @@ public class SpringBootDemoAcceptanceConfiguration {
      */
     private final static Logger logger = LoggerFactory.getLogger(SpringBootDemoAcceptanceConfiguration.class);
 
-    public SpringBootDemoAcceptanceConfiguration () {
+    public SpringBootDemoAcceptanceConfiguration() {
         System.out.println("Start SpringBootDemoAcceptanceConfiguration");
     }
 }

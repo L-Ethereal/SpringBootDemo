@@ -3,7 +3,8 @@ package spring.boot.demo.acceptance.server;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-import spring.boot.demo.acceptance.configuration.demo.SpringBootDemoAcceptanceConfiguration;
+import spring.boot.demo.acceptance.configuration.SpringBootDemoAcceptanceConfiguration;
+
 
 @Import(SpringBootDemoAcceptanceConfiguration.class)
 //@EnableConfigurationProperties
