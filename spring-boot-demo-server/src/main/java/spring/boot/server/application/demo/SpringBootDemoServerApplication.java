@@ -30,7 +30,7 @@ public class SpringBootDemoServerApplication implements CommandLineRunner {
 
     // bean id 与@Bean name 相同
     @Autowired
-    private DataSource masterDataSource;
+    private DataSource dataSource;
 
     public static void main(String[] args) throws Exception {
         SpringApplication springApplication = new SpringApplication(SpringBootDemoServerApplication.class);
@@ -48,6 +48,6 @@ public class SpringBootDemoServerApplication implements CommandLineRunner {
     // 实现CommandLineRunner 查看 Spring Boot 数据库连接池
     @Override
     public void run(String[] args) throws Exception {
-        System.out.println("Current Server Application MasterDataSource : " + masterDataSource);
+        System.out.println("Current Server Application DataSource : " + dataSource);
     }
 }

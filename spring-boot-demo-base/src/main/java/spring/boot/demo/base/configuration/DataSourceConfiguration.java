@@ -114,7 +114,7 @@ public class DataSourceConfiguration {
     @Bean(name = "masterDataSource")
     public DataSource dataSource () {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(masterDataSourceConfiguration.getUrl()); //数据源
+        config.setJdbcUrl(masterDataSourceConfiguration.getJdbcUrl()); //数据源
         config.setUsername(masterDataSourceConfiguration.getUsername()); //用户名
         config.setPassword(masterDataSourceConfiguration.getPassword()); //密码
         config.setDriverClassName(masterDataSourceConfiguration.getDriverClassName()); // DataSourceJDBC驱动程序提供的类的名称
