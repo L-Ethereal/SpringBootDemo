@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import spring.boot.demo.api.demo.DemoServiceGrpc;
 import spring.boot.demo.api.demo.DemoServiceProto;
+import spring.boot.demo.base.datasource.annotation.DynamicDataSource;
 import spring.boot.demo.dao.generate.demo.Acct;
 import spring.boot.demo.dao.generate.demo.AcctKey;
 import spring.boot.demo.dao.mapper.demo.AcctMapper;
@@ -23,6 +24,7 @@ public class HelloAction extends DemoServiceGrpc.DemoServiceImplBase {
     @Autowired
     private AcctMapper acctMapper;
 
+    @DynamicDataSource(dataSource = "slave")
     @Override
     public void sayHello(DemoServiceProto.DemoRequest req, StreamObserver<DemoServiceProto.DemoResponse> responseObserver) {
         log.info("接收到 GRPC-Client 消息:{}",req.getName());
@@ -32,7 +34,7 @@ public class HelloAction extends DemoServiceGrpc.DemoServiceImplBase {
         acctKey.setAcctnbr(acctNbr);
         Acct acct = acctMapper.selectByPrimaryKey(acctKey);
 
-        acct.setName("梅长");
+        acct.setName("梅长苏");
         acctMapper.updateByPrimaryKeySelective(acct);
 
 

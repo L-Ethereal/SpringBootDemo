@@ -14,7 +14,7 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "hikari.datasource.master")
 // 指定读取配置文件 可以指定多个配置文件 用逗号隔开 忽略不存在的配置文件
 @PropertySource( value = {"classpath:/config/datasource.properties"}, ignoreResourceNotFound = true, encoding = "UTF-8", name = "datasource.properties")
-public class MasterDataSourceConfiguration {
+public class MasterDataSourceProperties {
     private String jdbcUrl;
     private String username;
     private String password;

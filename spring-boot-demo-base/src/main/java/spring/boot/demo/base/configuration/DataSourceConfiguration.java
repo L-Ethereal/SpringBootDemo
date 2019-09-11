@@ -1,22 +1,32 @@
 package spring.boot.demo.base.configuration;
 
+import static spring.boot.demo.base.enumerate.DataSourceEnum.MASTER;
+import static spring.boot.demo.base.enumerate.DataSourceEnum.SLAVE;
+
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.testng.collections.Maps;
 
 import lombok.extern.slf4j.Slf4j;
-import spring.boot.demo.base.datasource.master.MasterDataSourceConfiguration;
+import spring.boot.demo.base.datasource.dynamic.DynamicDataSource;
+import spring.boot.demo.base.datasource.properties.DynamicDataSourceProperties;
 
 /**
  * HikariCP连接池配置
  */
 @Slf4j
+// 定时任务需要在配置类上添加@EnableScheduling，表示对定时任务的支持
+// 在对应执行任务的方法上添加@Scheduled，声明需要执行定时任务的方法
+@EnableScheduling
 @Configuration
 /*
     @Configuration 中使用 @Autowired 标红的问题
@@ -108,32 +118,96 @@ public class DataSourceConfiguration {
 
     // @Autowired注解：当需要引用一个spring容器中已注入的类实例时，直接在前面加入@Autowired注解，
     // spring就会自动对已注入的所有类对象进行类型匹配，一旦匹配成功，就直接将其返回
+//    @Autowired
+//    private MasterDataSourceProperties masterDataSourceProperties;
+//
+//    // 配置数据源 方式一
+//    @Bean(name = "masterDataSource")
+//    public DataSource  masterDataSource () {
+//        HikariConfig config = new HikariConfig();
+//        config.setJdbcUrl(masterDataSourceProperties.getJdbcUrl()); //数据源
+//        config.setUsername(masterDataSourceProperties.getUsername()); //用户名
+//        config.setPassword(masterDataSourceProperties.getPassword()); //密码
+//        config.setDriverClassName(masterDataSourceProperties.getDriverClassName()); // DataSourceJDBC驱动程序提供的类的名称
+//        config.setReadOnly(masterDataSourceProperties.isReadOnly()); // 设置是否只可读
+//        config.addDataSourceProperty("cachePrepStmts", "true"); //是否自定义配置，为true时下面两个参数才生效
+//        config.addDataSourceProperty("prepStmtCacheSize", "250"); //连接池大小默认25，官方推荐250-500
+//        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048"); //单条语句最大长度默认256，官方推荐2048
+//        config.addDataSourceProperty("useServerPrepStmts", "true"); //新版本MySQL支持服务器端准备，开启能够得到显著性能提升
+//        config.addDataSourceProperty("useLocalSessionState", "true");
+//        config.addDataSourceProperty("useLocalTransactionState", "true");
+//        config.addDataSourceProperty("rewriteBatchedStatements", "true");
+//        config.addDataSourceProperty("cacheResultSetMetadata", "true");
+//        config.addDataSourceProperty("cacheServerConfiguration", "true");
+//        config.addDataSourceProperty("elideSetAutoCommits", "true");
+//        config.addDataSourceProperty("maintainTimeStats", "false");
+//        config.addDataSourceProperty("useUnicode", "true");
+//        config.addDataSourceProperty("characterEncoding", "utf8");
+//
+//        HikariDataSource hikariDataSource = new HikariDataSource(config);
+//        return hikariDataSource;
+//    }
+
+    /*
+    @ConfigurationProperties 作用
+    实现了BeanPostProcessor接口，在bean被实例化后，会调用后置处理，递归的查找属性，通过反射注入值，对大多数属性而言强制需提供其setter和getter方法。
+    但是属性名称不要求一定相同，只需保证“set”字符串拼接配置文件的属性和setter方法名相同即可
+
+    @ConfigurationProperties和@Value 2个注解。
+    @ConfigurationProperties注解支持属性文件和javabean的映射，而@Value支持spel表达式。
+    如果是多个属性映射，而且常常被复用，推荐使用@ConfigurationProperties，如果只读取单个属性则使用@Value要方便许多
+
+    @ConfigurationProperties的用法
+    1.可以搭配@bean使用，绑定三方属性
+    2.可以将属性转换成bean对象，这里如果不用@component修饰。则在容器无法获取，如果只使用@ConfigurationProperties需要
+    结合@EnableConfigurationProperties(PropertisInject.class)将其注册到spring容器中。
+     */
+    // 配置数据源 方式二
+    // 配置 slave 数据源
+//    @Bean(name = "slaveDataSource")
+////    @Primary
+//    @ConfigurationProperties("hikari.datasource.slave")
+//    public HikariDataSource slaveDataSource() {
+//        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+//    }
+
+
+
+    // 配置数据源 方式三
+    // 由于 DataSourceProperties() 属性较少 所以 properties 中有一些属性获取不到
+    // 不推荐使用
+//    @Bean
+//    @ConfigurationProperties("hikari.datasource.hist")
+//    public DataSourceProperties hiastDataSourceProperties() {
+//        return new DataSourceProperties();
+//    }
+//
+//    @Bean
+//    public DataSource histDataSource() {
+//        return hiastDataSourceProperties().initializeDataSourceBuilder().build();
+//    }
+
+
     @Autowired
-    private MasterDataSourceConfiguration masterDataSourceConfiguration;
+    private DynamicDataSourceProperties dynamicDataSourceProperties;
 
-    @Bean(name = "masterDataSource")
-    public DataSource dataSource () {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(masterDataSourceConfiguration.getJdbcUrl()); //数据源
-        config.setUsername(masterDataSourceConfiguration.getUsername()); //用户名
-        config.setPassword(masterDataSourceConfiguration.getPassword()); //密码
-        config.setDriverClassName(masterDataSourceConfiguration.getDriverClassName()); // DataSourceJDBC驱动程序提供的类的名称
-        config.addDataSourceProperty("cachePrepStmts", "true"); //是否自定义配置，为true时下面两个参数才生效
-        config.addDataSourceProperty("prepStmtCacheSize", "250"); //连接池大小默认25，官方推荐250-500
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048"); //单条语句最大长度默认256，官方推荐2048
-        config.addDataSourceProperty("useServerPrepStmts", "true"); //新版本MySQL支持服务器端准备，开启能够得到显著性能提升
-        config.addDataSourceProperty("useLocalSessionState", "true");
-        config.addDataSourceProperty("useLocalTransactionState", "true");
-        config.addDataSourceProperty("rewriteBatchedStatements", "true");
-        config.addDataSourceProperty("cacheResultSetMetadata", "true");
-        config.addDataSourceProperty("cacheServerConfiguration", "true");
-        config.addDataSourceProperty("elideSetAutoCommits", "true");
-        config.addDataSourceProperty("maintainTimeStats", "false");
-        config.addDataSourceProperty("useUnicode", "true");
-        config.addDataSourceProperty("characterEncoding", "utf8");
-        config.addDataSourceProperty("readOnly", "true");
-
-        HikariDataSource hikariDataSource = new HikariDataSource(config);
-        return hikariDataSource;
+    @Bean(name = "dynamicDataSource")
+    public DataSource dynamicDataSource() {
+        //按照目标数据源名称和目标数据源对象的映射存放在Map中
+        Map<Object, Object> targetDataSources = Maps.newHashMap();
+        targetDataSources.put(MASTER.dataSource(), dynamicDataSourceProperties.masterDataSource());
+        targetDataSources.put(SLAVE.dataSource(), dynamicDataSourceProperties.slaveDataSource());
+        //采用是想AbstractRoutingDataSource的对象包装多数据源
+        DynamicDataSource dataSource = new DynamicDataSource();
+        dataSource.setTargetDataSources(targetDataSources);
+        //设置默认的数据源，当拿不到数据源时，使用此配置
+        dataSource.setDefaultTargetDataSource(dynamicDataSourceProperties.masterDataSource());
+        return dataSource;
     }
+
+    @Bean
+    public PlatformTransactionManager txManager() {
+        return new DataSourceTransactionManager(dynamicDataSource());
+    }
+
 }
