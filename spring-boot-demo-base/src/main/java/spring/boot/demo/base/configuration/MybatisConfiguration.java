@@ -80,6 +80,150 @@ public class MybatisConfiguration {
 //        return javaSqlSessionFactory;
 //    }
 
+    /*
+    java 配置 mybatis sqlSessionFactory
+    SqlSessionFactory mybatisConfig(String driver, String url, String username,
+			String password) throws SQLException {
+		// 获取DataSource，DataSource接口有多个实现类，我们用的是mybatis给我们提供的PooledDataSource
+		PooledDataSource pooledDataSource = new PooledDataSource(driver, url,
+				username, password);
+		// 若需要配置pooledDatasource，则可以用他的set方法，如
+		pooledDataSource.setLoginTimeout(6000);
+		DataSource dataSource = pooledDataSource;
+
+		// 配置事务管理，这里我们使用JDBC的事务
+		TransactionFactory trcFactory = new JdbcTransactionFactory();
+		// 配置Environment对象，"development"是我们给起的名字
+		Environment env = new Environment("development", trcFactory, dataSource);
+		// 创建Configuration对象
+		Configuration config = new Configuration(env);
+		//<settings></settings>中的内容在此处配置
+		config.setLazyLoadingEnabled(true);
+
+		// 起别名
+		TypeAliasRegistry aliases = config.getTypeAliasRegistry();
+		aliases.registerAlias("bean", TestBean.class);
+
+		// 映射接口，若有xml文件，则xml的文件应和接口文件同名
+		config.addMapper(DaoMapper.class);
+
+		SqlSessionFactory sqlSessionFactory =
+				new SqlSessionFactoryBuilder().build(config);
+		return sqlSessionFactory;
+	}
+
+	解析：
+	解析一：配置 DataSource
+
+    PooledDataSource pooledDataSource = new PooledDataSource(driver, url,username, password);
+
+    对应
+
+    <dataSource type="POOLED">
+          <property name="driver" value="${driver}" />
+          <property name="url" value="${url}" />
+          <property name="username" value="${username}" />
+          <property name="password" value="${password}" />
+    </dataSource>
+
+
+    解析二：配置 JDBC 事务
+    TransactionFactory trcFactory = new JdbcTransactionFactory();
+
+    对应
+
+    <transactionManager type="JDBC" />
+
+
+    解析三：配置Environment
+    Environment env = new Environment("development", trcFactory, dataSource);
+
+    对应
+
+    <environment id="development">
+        <transactionManager type="JDBC" />
+        <dataSource type="POOLED"></dataSource>
+    </environment>
+
+
+    解析四：装入Configuration
+    Configuration config = new Configuration(env);
+    对应
+    <configuration>
+        <environments default="development">
+            <environment id="development">
+            </environment>
+        </environments>
+    </configuration>
+
+    -------
+    config.setLazyLoadingEnabled(true);
+    对应
+    <settings>
+      <setting name="lazyLoadingEnabled" value="true"/>
+    <settings>
+
+
+    解析五：配置别名
+    TypeAliasRegistry aliases = config.getTypeAliasRegistry();
+    aliases.registerAlias("bean", TestBean.class);
+
+    对应
+
+    <typeAliases>
+      <typeAlias alias="bean" type="com.amiu.TestBean"/>
+    </typeAliases>
+
+
+    解析六：添加映射XML，xml名称应和DaoMapper.class并且在同一个包下
+    config.addMapper(DaoMapper.class);
+
+    对应
+
+    <mappers>
+        <mapper resource="com/amiu/mybatis/DaoMapper.xml"/>
+    </mappers>
+
+
+    对应的mybatisConfig.xml
+
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+    <configuration>
+        <!-- 导入配置文件 -->
+        <properties resource="com/amiu/mybatis/dbConfig.properties" />
+        <environments default="development">
+            <environment id="development">
+                <!-- 使用jdbc事务管理,事务控制由mybatis管理-->
+                <transactionManager type="JDBC" />
+                <!-- 数据库连接池,由mybatis管理-->
+                <dataSource type="POOLED">
+                    <property name="driver" value="${driver}" />
+                    <property name="url" value="${url}" />
+                    <property name="username" value="${username}" />
+                    <property name="password" value="${password}" />
+                </dataSource>
+            </environment>
+        </environments>
+        <!-- 延迟加载的全局开关 -->
+        <settings>
+            <setting name="lazyLoadingEnabled" value="true"/>
+        <settings>
+        <!-- 配置别名 -->
+        <typeAliases>
+            <typeAlias alias="bean" type="com.amiu.TestBean"/>
+        </typeAliases>
+        <!-- 配置mapper -->
+        <mappers>
+            <mapper resource="com/amiu/mybatis/DaoMapper.xml"/>
+        </mappers>
+    </configuration>
+     */
+
+
     @Bean
     public SqlSessionFactory mybatisConfig() throws SQLException {
 //        // 获取DataSource，DataSource接口有多个实现类，我们用的是mybatis给我们提供的PooledDataSource
