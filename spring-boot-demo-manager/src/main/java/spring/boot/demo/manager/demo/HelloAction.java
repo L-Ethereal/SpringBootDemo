@@ -8,6 +8,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import spring.boot.demo.api.demo.DemoServiceGrpc;
 import spring.boot.demo.api.demo.DemoServiceProto;
 import spring.boot.demo.base.datasource.annotation.DynamicDataSource;
+import spring.boot.demo.base.support.util.Const;
 import spring.boot.demo.dao.generate.demo.Acct;
 import spring.boot.demo.dao.generate.demo.AcctKey;
 import spring.boot.demo.dao.mapper.demo.AcctMapper;
@@ -24,7 +25,7 @@ public class HelloAction extends DemoServiceGrpc.DemoServiceImplBase {
     @Autowired
     private AcctMapper acctMapper;
 
-    @DynamicDataSource(dataSource = "slave")
+    @DynamicDataSource(dataSource = Const.DATASOURCE_SLAVE)
     @Override
     public void sayHello(DemoServiceProto.DemoRequest req, StreamObserver<DemoServiceProto.DemoResponse> responseObserver) {
         log.info("接收到 GRPC-Client 消息:{}",req.getName());

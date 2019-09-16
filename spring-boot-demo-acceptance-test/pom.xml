@@ -7,6 +7,19 @@
     <!-- mvn install Error:(6,54) java: 程序包spring.boot.demo.acceptance.configuration.demo不存在
     1.  spring-boot工程打包编译时，会生成两种jar包，一种是普通的jar，另一种是可执行jar。默认情况下，
         这两种jar的名称相同，在不做配置的情况下，普通的jar先生成，可执行jar后生成，所以可执行jar会覆盖普通的jar
+
+        <build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<classifier>exec</classifier>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
     2.  先将其他 module install 之后 再 install 此 module-->
     <parent>
         <groupId>spring-boot-demo</groupId>
