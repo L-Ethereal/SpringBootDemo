@@ -26,6 +26,8 @@
         <module>spring-boot-demo-api</module>
         <module>spring-boot-demo-dao</module>
         <module>spring-boot-demo-acceptance-test</module>
+        <module>spring-boot-demo-web-crawler</module>
+        <module>spring-boot-demo-data</module>
     </modules>
 
     <build>

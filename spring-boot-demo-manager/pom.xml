@@ -34,6 +34,12 @@
             <artifactId>spring-boot-demo-base</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>spring-boot-demo</groupId>
+            <artifactId>spring-boot-demo-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 
