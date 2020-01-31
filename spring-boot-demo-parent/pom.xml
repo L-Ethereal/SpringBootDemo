@@ -31,7 +31,7 @@
         <gRPC.version>2.5.1.RELEASE</gRPC.version>
 
         <!-- 依赖包版本号 -->
-        <checkstyle.version>8.8</checkstyle.version>
+        <checkstyle.version>8.29</checkstyle.version>
         <testng.version>7.0.0-beta7</testng.version>
         <commons-lang3.version>3.5</commons-lang3.version>
 
